@@ -102,6 +102,8 @@ export namespace ProtocolProxyApi {
 
         Media: MediaApi;
 
+        DeviceAccess: DeviceAccessApi;
+
     }
 
 
@@ -3861,6 +3863,35 @@ export namespace ProtocolProxyApi {
          * list of player ids and all events again.
          */
         on(event: 'playersCreated', listener: (params: Protocol.Media.PlayersCreatedEvent) => void): void;
+
+    }
+
+    export interface DeviceAccessApi {
+        /**
+         * Enable events in this domain.
+         */
+        enable(): Promise<void>;
+
+        /**
+         * Disable events in this domain.
+         */
+        disable(): Promise<void>;
+
+        /**
+         * Select a device in response to a DeviceAccess.deviceRequestPrompted event.
+         */
+        selectPrompt(params: Protocol.DeviceAccess.SelectPromptRequest): Promise<void>;
+
+        /**
+         * Cancel a prompt in response to a DeviceAccess.deviceRequestPrompted event.
+         */
+        cancelPrompt(params: Protocol.DeviceAccess.CancelPromptRequest): Promise<void>;
+
+        /**
+         * A device request opened a user prompt to select a device. Respond with the
+         * selectPrompt or cancelPrompt command.
+         */
+        on(event: 'deviceRequestPrompted', listener: (params: Protocol.DeviceAccess.DeviceRequestPromptedEvent) => void): void;
 
     }
 }

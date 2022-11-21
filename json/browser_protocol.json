@@ -2152,8 +2152,6 @@
                         "durableStorage",
                         "flash",
                         "geolocation",
-                        "idleDetection",
-                        "localFonts",
                         "midi",
                         "midiSysex",
                         "nfc",
@@ -2162,12 +2160,11 @@
                         "periodicBackgroundSync",
                         "protectedMediaIdentifier",
                         "sensors",
-                        "storageAccess",
                         "videoCapture",
                         "videoCapturePanTiltZoom",
+                        "idleDetection",
                         "wakeLockScreen",
-                        "wakeLockSystem",
-                        "windowManagement"
+                        "wakeLockSystem"
                     ]
                 },
                 {
@@ -4370,11 +4367,6 @@
                         {
                             "name": "securityOrigin",
                             "description": "Security origin of the cache.",
-                            "type": "string"
-                        },
-                        {
-                            "name": "storageKey",
-                            "description": "Storage key of the cache.",
                             "type": "string"
                         },
                         {
@@ -22631,6 +22623,91 @@
                 {
                     "name": "disable",
                     "description": "Disables the Media domain."
+                }
+            ]
+        },
+        {
+            "domain": "DeviceAccess",
+            "experimental": true,
+            "types": [
+                {
+                    "id": "RequestId",
+                    "description": "Device request id.",
+                    "type": "string"
+                },
+                {
+                    "id": "DeviceId",
+                    "description": "A device id. For bluetooth devices, matches the \u201cid\u201d member of\nBluetoothDevice instances.",
+                    "type": "string"
+                },
+                {
+                    "id": "PromptDevice",
+                    "description": "Device information displayed in a user prompt to select a device.",
+                    "type": "object",
+                    "properties": [
+                        {
+                            "name": "id",
+                            "$ref": "DeviceId"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Display name as it appears in a device request user prompt.",
+                            "type": "string"
+                        }
+                    ]
+                }
+            ],
+            "commands": [
+                {
+                    "name": "enable",
+                    "description": "Enable events in this domain."
+                },
+                {
+                    "name": "disable",
+                    "description": "Disable events in this domain."
+                },
+                {
+                    "name": "selectPrompt",
+                    "description": "Select a device in response to a DeviceAccess.deviceRequestPrompted event.",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "$ref": "RequestId"
+                        },
+                        {
+                            "name": "deviceId",
+                            "$ref": "DeviceId"
+                        }
+                    ]
+                },
+                {
+                    "name": "cancelPrompt",
+                    "description": "Cancel a prompt in response to a DeviceAccess.deviceRequestPrompted event.",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "$ref": "RequestId"
+                        }
+                    ]
+                }
+            ],
+            "events": [
+                {
+                    "name": "deviceRequestPrompted",
+                    "description": "A device request opened a user prompt to select a device. Respond with the\nselectPrompt or cancelPrompt command.",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "$ref": "RequestId"
+                        },
+                        {
+                            "name": "devices",
+                            "type": "array",
+                            "items": {
+                                "$ref": "PromptDevice"
+                            }
+                        }
+                    ]
                 }
             ]
         }

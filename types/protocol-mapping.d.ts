@@ -696,6 +696,11 @@ export namespace ProtocolMapping {
          * list of player ids and all events again.
          */
         'Media.playersCreated': [Protocol.Media.PlayersCreatedEvent];
+        /**
+         * A device request opened a user prompt to select a device. Respond with the
+         * selectPrompt or cancelPrompt command.
+         */
+        'DeviceAccess.deviceRequestPrompted': [Protocol.DeviceAccess.DeviceRequestPromptedEvent];
     }
 
     export interface Commands {
@@ -4540,6 +4545,34 @@ export namespace ProtocolMapping {
          */
         'Media.disable': {
             paramsType: [];
+            returnType: void;
+        };
+        /**
+         * Enable events in this domain.
+         */
+        'DeviceAccess.enable': {
+            paramsType: [];
+            returnType: void;
+        };
+        /**
+         * Disable events in this domain.
+         */
+        'DeviceAccess.disable': {
+            paramsType: [];
+            returnType: void;
+        };
+        /**
+         * Select a device in response to a DeviceAccess.deviceRequestPrompted event.
+         */
+        'DeviceAccess.selectPrompt': {
+            paramsType: [Protocol.DeviceAccess.SelectPromptRequest];
+            returnType: void;
+        };
+        /**
+         * Cancel a prompt in response to a DeviceAccess.deviceRequestPrompted event.
+         */
+        'DeviceAccess.cancelPrompt': {
+            paramsType: [Protocol.DeviceAccess.CancelPromptRequest];
             returnType: void;
         };
     }

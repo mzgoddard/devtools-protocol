@@ -3704,7 +3704,7 @@ export namespace Protocol {
             windowState?: WindowState;
         }
 
-        export type PermissionType = ('accessibilityEvents' | 'audioCapture' | 'backgroundSync' | 'backgroundFetch' | 'clipboardReadWrite' | 'clipboardSanitizedWrite' | 'displayCapture' | 'durableStorage' | 'flash' | 'geolocation' | 'idleDetection' | 'localFonts' | 'midi' | 'midiSysex' | 'nfc' | 'notifications' | 'paymentHandler' | 'periodicBackgroundSync' | 'protectedMediaIdentifier' | 'sensors' | 'storageAccess' | 'videoCapture' | 'videoCapturePanTiltZoom' | 'wakeLockScreen' | 'wakeLockSystem' | 'windowManagement');
+        export type PermissionType = ('accessibilityEvents' | 'audioCapture' | 'backgroundSync' | 'backgroundFetch' | 'clipboardReadWrite' | 'clipboardSanitizedWrite' | 'displayCapture' | 'durableStorage' | 'flash' | 'geolocation' | 'midi' | 'midiSysex' | 'nfc' | 'notifications' | 'paymentHandler' | 'periodicBackgroundSync' | 'protectedMediaIdentifier' | 'sensors' | 'videoCapture' | 'videoCapturePanTiltZoom' | 'idleDetection' | 'wakeLockScreen' | 'wakeLockSystem');
 
         export type PermissionSetting = ('granted' | 'denied');
 
@@ -5173,10 +5173,6 @@ export namespace Protocol {
              * Security origin of the cache.
              */
             securityOrigin: string;
-            /**
-             * Storage key of the cache.
-             */
-            storageKey: string;
             /**
              * The name of the cache.
              */
@@ -16730,6 +16726,49 @@ export namespace Protocol {
          */
         export interface PlayersCreatedEvent {
             players: PlayerId[];
+        }
+    }
+
+    export namespace DeviceAccess {
+
+        /**
+         * Device request id.
+         */
+        export type RequestId = string;
+
+        /**
+         * A device id. For bluetooth devices, matches the “id” member of
+         * BluetoothDevice instances.
+         */
+        export type DeviceId = string;
+
+        /**
+         * Device information displayed in a user prompt to select a device.
+         */
+        export interface PromptDevice {
+            id: DeviceId;
+            /**
+             * Display name as it appears in a device request user prompt.
+             */
+            name: string;
+        }
+
+        export interface SelectPromptRequest {
+            id: RequestId;
+            deviceId: DeviceId;
+        }
+
+        export interface CancelPromptRequest {
+            id: RequestId;
+        }
+
+        /**
+         * A device request opened a user prompt to select a device. Respond with the
+         * selectPrompt or cancelPrompt command.
+         */
+        export interface DeviceRequestPromptedEvent {
+            id: RequestId;
+            devices: PromptDevice[];
         }
     }
 }
